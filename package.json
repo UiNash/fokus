@@ -1,0 +1,19 @@
+{
+  "name": "fokus",
+  "version": "1.1.2",
+  "description": "A discord bot dedicated to multiple categories",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ."
+  },
+  "dependencies": {
+    "discord.js": "^12.2.0",
+    "dotenv": "^8.2.0",
+    "math-expression-evaluator": "^1.2.22",
+    "mongoose": "^5.9.22",
+    "superagent": "^5.3.1"
+  },
+  "keywords": [],
+  "author": "paco-dev",
+  "license": "ISC"
+}
