@@ -1,4 +1,6 @@
 const Discord = require("discord.js");
+const DB = require("better-sqlite3");
+const settings = new DB("database/settings.db");
 const util = require("util");
 const fs = require("fs");
 const path = require("path");

@@ -1,29 +1,29 @@
 const Discord = require("discord.js");
 
 module.exports = {
-	name: "ban",
-	description: "Ban a member who breaks the rules",
+	name: "kick",
+	description: "Kick a member who breaks the rules",
 	aliases: [],
   category: "moderation",
   args: true,
   usage: "<@member|id> [reason]",
 	run: async (client, message, args) => {
-		let member = message.guild.members.cache.get(args[0].replace(/[<@!>]/g, ""));
+		let member = message.guild.members.cache.get(args[0].replace(/[<>@!]/g, ""));
     let reason = (args.slice(1).join(" ") || "Reason not specified");
-    if (!message.guild.me.hasPermission("BAN_MEMBERS")) {
+    if (!message.guild.me.hasPermission("KICK_MEMBERS")) {
       const embed = new Discord.MessageEmbed()
         .setColor("#f4f4f4")
         .setTitle(message.author.tag)
-        .setDescription("> I need permissions to ban")
+        .setDescription("> I need permissions to kick")
         .setTimestamp()
         .setFooter(client.version, client.user.displayAvatarURL());
       let msg = await message.channel.send(embed);
       await msg.delete({ timeout: 10000 });
-    } else if (!message.member.hasPermission("BAN_MEMBERS")) {
+    } else if (!message.member.hasPermission("KICK_MEMBERS")) {
       const embed = new Discord.MessageEmbed()
         .setColor("#f4f4f4")
         .setTitle(message.author.tag)
-        .setDescription("> You need permissions to ban")
+        .setDescription("> You need permissions to kick")
         .setTimestamp()
         .setFooter(client.version, client.user.displayAvatarURL());
       let msg = await message.channel.send(embed);
@@ -41,7 +41,7 @@ module.exports = {
       const embed = new Discord.MessageEmbed()
         .setColor("#f4f4f4")
         .setTitle(message.author.tag)
-        .setDescription("> I can't ban this member")
+        .setDescription("> I can't kick this member")
         .setTimestamp()
         .setFooter(client.version, client.user.displayAvatarURL());
       let msg = await message.channel.send(embed);
@@ -50,7 +50,7 @@ module.exports = {
       const embed = new Discord.MessageEmbed()
         .setColor("#f4f4f4")
         .setTitle(message.author.tag)
-        .setDescription("> You don't ban this member")
+        .setDescription("> You don't kick this member")
         .setTimestamp()
         .setFooter(client.version, client.user.displayAvatarURL());
       let msg = await message.channel.send(embed);
@@ -59,17 +59,17 @@ module.exports = {
       const embed = new Discord.MessageEmbed()
         .setColor("#f4f4f4")
         .setTitle(member.user.tag)
-        .setDescription(`> You have been banned from ${message.guild.name}!`)
+        .setDescription(`> You have been kicked from ${message.guild.name}!`)
         .addField("> Author", `${message.author.tag} (${message.author.id})`)
         .addField("> Reason", reason)
         .setTimestamp()
         .setFooter(client.version, client.user.displayAvatarURL());
       await member.send(embed);
-      member.ban({ reason: `${reason}, by ${message.author.tag} (${message.author.id})` }).then(async () => {
+      member.kick(`${reason}, by ${message.author.tag} (${message.author.id})`).then(async () => {
         const embed = new Discord.MessageEmbed()
           .setColor("#f4f4f4")
           .setTitle(message.author.tag)
-          .setDescription(`> ${member.user.tag} has been banned from the guild`)
+          .setDescription(`> ${member.user.tag} has been kicked from the guild`)
           .setTimestamp()
           .setFooter(client.version, client.user.displayAvatarURL());
         let msg = await message.channel.send(embed)

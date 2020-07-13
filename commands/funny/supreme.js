@@ -7,11 +7,11 @@ module.exports = {
 	aliases: [],
   category: "funny",
   args: true,
-  usage: "<message>",
+  usage: "<message> (min 2 characters & max 24)",
 	run: async (client, message, args) => {
     if (args.join(" ").length < 2) {
       const embed = new Discord.MessageEmbed()
-        .setColor(client.color)
+        .setColor("#f4f4f4")
         .setDescription("> The minimum number of characters allowed is 2")
         .setTimestamp()
         .setFooter(client.version, client.user.displayAvatarURL());
@@ -20,7 +20,7 @@ module.exports = {
       message.delete().catch(console.error);
     } else if (args.join(" ").length > 24) {
       const embed = new Discord.MessageEmbed()
-        .setColor(client.color)
+        .setColor("#f4f4f4")
         .setDescription("> The maximum number of characters allowed is 24")
         .setTimestamp()
         .setFooter(client.version, client.user.displayAvatarURL());

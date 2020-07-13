@@ -13,14 +13,14 @@ module.exports = {
       let operation = args.join(" ")
       let result = math.eval(operation);
       const embed = new Discord.MessageEmbed()
-        .setColor(client.color)
+        .setColor("#f4f4f4")
         .addField("Output 📤", `\`\`\`xl\n${operation} = ${result}\n\`\`\``);
       let msg = await message.channel.send(embed);
       await msg.delete({ timeout: 10000 });
       message.delete().catch(console.error);
     } catch (err) {
       const embed = new Discord.MessageEmbed()
-        .setColor(client.color)
+        .setColor("#f4f4f4")
         .addField("Output 📤", `\`\`\`diff\n- Invalid entry\n\`\`\``);
       let msg = await message.channel.send(embed);
       await msg.delete({ timeout: 20000 });

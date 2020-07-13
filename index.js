@@ -1,12 +1,10 @@
 const Discord = require("discord.js");
+require("dotenv").config();
 const client = new Discord.Client();
 const fs = require("fs");
 const path = require("path");
 
-client.color = "#f4f4f4";
 client.commands = new Discord.Collection();
-client.db = require("mongoose");
-client.owner = "700582841741738024";
 client.version = "version 1.1.2";
 
 const commands = [];
