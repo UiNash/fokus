@@ -5,6 +5,7 @@ const fs = require("fs");
 const path = require("path");
 
 client.commands = new Discord.Collection();
+client.owner = "700582841741738024";
 client.version = "version 1.1.2";
 
 const commands = [];
