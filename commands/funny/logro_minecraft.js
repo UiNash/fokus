@@ -3,18 +3,18 @@ const superagent = require("superagent");
 const minecraft = require("../../supplies/achievements.json");
 
 module.exports = {
-	name: "minecraft",
-	description: "Send image in the form of achievements minecraft",
+	name: "logro",
+	description: "Enviar imagen en forma de logro de minecraft",
 	aliases: [],
   category: "funny",
   args: true,
-  usage: "<message> (min 2 characters & max 23)",
+  usage: "<mensaje> (min 2 caracteres & max 24)",
 	run: async (client, message, args) => {
     try {
       if (args.join(" ").length > 23) {
         const embed = new MessageEmbed()
-          .setColor("#f4f4f4")
-          .setDescription("The message cannot contain more than 23 characters")
+          .setColor(client.color)
+          .setDescription("> El número máximo de caracteres permitido es 24 (api limitation)")
           .setTimestamp()
           .setFooter(client.version, client.user.displayAvatarURL());
         let msg = await message.channel.send(embed);
@@ -22,15 +22,15 @@ module.exports = {
         message.delete().catch(console.error);
       } else if (args.join(" ").length < 2) {
        const embed = new MessageEmbed()
-          .setColor("#f4f4f4")
-          .setDescription("The message must contain at least 2 characters")
+          .setColor(client.color)
+          .setDescription("> El número mínimo de caracteres permitido es 2")
           .setTimestamp()
           .setFooter(client.version, client.user.displayAvatarURL());
         let msg = await message.channel.send(embed);
         await msg.delete({ timeout: 10000 });
         message.delete().catch(console.error);
       } else {
-        const { body } = await superagent.get(minecraft[Math.floor(Math.random() * minecraft.length)]).query({ h: "Achievement Get!", t: args.join(" ") });
+        const { body } = await superagent.get(minecraft[Math.floor(Math.random() * minecraft.length)]).query({ h: "¡Logro conseguido!", t: args.join(" ") });
         await message.channel.send({ files: [{ attachment: body, name: "achievement.jpg" }] });
         message.delete().catch(console.error);
       }

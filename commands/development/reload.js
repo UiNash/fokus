@@ -18,7 +18,7 @@ module.exports = {
         client.removeAllListeners(event);
         client.on(event, content.bind(null, client));
         const embed = new Discord.MessageEmbed()
-          .setColor("#f4f4f4")
+          .setColor(client.color)
           .setDescription(`Event \`${event}\` was reloaded!`)
           .setTimestamp()
           .setFooter(client.version, client.user.displayAvatarURL());
@@ -51,7 +51,7 @@ module.exports = {
         const command = require(commands[0]);
         client.commands.set(command.name, command);
         const embed = new Discord.MessageEmbed()
-          .setColor("#f4f4f4")
+          .setColor(client.color)
           .setDescription(`Command \`${commandName}\` was reloaded!`)
           .setTimestamp()
           .setFooter(client.version, client.user.displayAvatarURL());

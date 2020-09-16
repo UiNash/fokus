@@ -1,9 +1,15 @@
+// BACKEND (glitch)
+require("http").createServer((req, res) => {
+  res.end(JSON.stringify({ hello: "world" }))
+}).listen(process.env.PORT);
+
+// COMMAND HANDLE
 const Discord = require("discord.js");
-require("dotenv").config();
 const client = new Discord.Client();
 const fs = require("fs");
 const path = require("path");
 
+client.color = "#f4f4f4";
 client.commands = new Discord.Collection();
 client.owner = "700582841741738024";
 client.version = "version 1.1.2";

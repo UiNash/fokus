@@ -17,13 +17,12 @@ module.exports = async (client, message) => {
 
 	if (message.content.match(new RegExp(`^<@!?${client.user.id}>( |)$`))) {
 		let embed = new Discord.MessageEmbed()
-			.setColor("#f4f4f4")
-			.setTitle(`Hi ${message.author.tag}!`)
-			.setDescription(`My help command is \`${prefix}help\``)
+			.setColor(client.color)
+			.setTitle(`¡Hola ${message.author.tag}!`)
+			.setDescription(`Mi comando de ayuda es \`${prefix}help\``)
 			.setTimestamp()
 			.setFooter(client.version, client.user.displayAvatarURL());
 		let msg = await message.channel.send(embed);
-		await msg.delete({ timeout: 10000 });
 		message.delete().catch(console.error);
 		return;
 	}
@@ -36,12 +35,12 @@ module.exports = async (client, message) => {
 	fs.readdirSync("./commands/development").forEach(file => {
 		development.push(`${file.substring(0, file.length - 3)}`);
 	});
-	if (development.includes(commandName) && message.author.id !== "700582841741738024") return;
+	if (development.includes(commandName) && message.author.id !== client.owner) return;
 
 	if (command.args && !args.length) {
-		let reply = `You didn't put arguments, ${message.author}!`;
+		let reply = `No ingresaste nada, ${message.author}!`;
 		if (command.usage) {
-			reply += `\nUse the command like this: \`${prefix}${commandName} ${command.usage}\``;
+			reply += `\nUsa el comando así: \`${prefix}${commandName} ${command.usage}\``;
 		}
 		let msg = await message.channel.send(reply);
 		await msg.delete({ timeout: 10000 });

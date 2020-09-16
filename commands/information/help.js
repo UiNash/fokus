@@ -4,11 +4,11 @@ const settings = new DB("database/settings.db");
 
 module.exports = {
   name: "help",
-  description: "Help command",
-  aliases: ["cmd", "cmds"],
+  description: "Comando de ayuda",
+  aliases: ["cmd", "cmds", "ayuda"],
   category: "information",
   args: false,
-  usage: "[commandName]",
+  usage: "[comando]",
   run: async (client, message, args) => {
     let prefix = settings.prepare("SELECT prefix FROM settings WHERE guildid = ?").get(message.guild.id).prefix;
     if (args[0]) {
@@ -16,53 +16,53 @@ module.exports = {
       const command = client.commands.get(commandName) || client.commands.find(command => command.aliases && command.aliases.includes(commandName));
       if (command && command.category != "development") {
       const embed = new MessageEmbed()
-        .setColor("#f4f4f4")
+        .setColor(client.color)
         .setAuthor(`Help | ${commandName}`)
         .setDescription(`> **[Description]**
           > \`${command.description}\`
           > 
-          > **[Aliases]**
-          > \`${command.aliases.length === 0 ? "Has no aliases" : command.aliases.join("`, `")}\`
+          > **[Alias]**
+          > \`${command.aliases.length === 0 ? "No tiene alias" : command.aliases.join("`, `")}\`
           > 
-          > **[Usage]**
+          > **[Uso]**
           > \`${prefix}${commandName} ${command.usage}\``)
         .setTimestamp()
         .setFooter(client.version, client.user.displayAvatarURL());
       await message.channel.send(embed)
       } else {
         const embed = new MessageEmbed()
-          .setColor("#f4f4f4")
+          .setColor(client.color)
           .setDescription(`The command \`${commandName}\` was not found`)
           .setTimestamp()
           .setFooter(client.version, client.user.displayAvatarURL());
         message.channel.send(embed)
       }
     } else {
-    let msg = await message.channel.send("Wait a moment...")
+    let msg = await message.channel.send("Espera un momento...")
     setTimeout(() => {
       let embed = new MessageEmbed()
-        .setColor("#f4f4f4")
+        .setColor(client.color)
         .setAuthor(`Help | ${client.user.username}`)
-        .setDescription(`> **[Administration]**
+        .setDescription(`> **[Administración]**
           > \`${client.commands.filter(cmd => cmd.category === "administration").keyArray().join("`, `")}\`
           > 
-          > **[Funny]**
+          > **[Diversión]**
           > \`${client.commands.filter(cmd => cmd.category === "funny").keyArray().join("`, `")}\`
           > 
-          > **[Information]**
+          > **[Información]**
           > \`${client.commands.filter(cmd => cmd.category === "information").keyArray().join("`, `")}\`
           > 
-          > **[Moderation]**
+          > **[Moderación]**
           > \`${client.commands.filter(cmd => cmd.category === "moderation").keyArray().join("`, `")}\`
           > 
-          > **[Utility]**
+          > **[Utilidad]**
           > \`${client.commands.filter(cmd => cmd.category === "utility").keyArray().join("`, `")}\``)
         .setTimestamp()
         .setFooter(client.version, client.user.displayAvatarURL());
       message.author.send(embed).then(() => {
-        msg.edit("Check your private messages");
+        msg.edit("Revisa tus mensajes privados");
       }).catch(() => {
-        msg.edit("It is not possible to send you the message...");  
+        msg.edit("No es posible enviarte el mensaje...");  
       });
     }, 2000);
     await msg.delete({ timeout: 5000 });

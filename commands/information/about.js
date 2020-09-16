@@ -2,13 +2,13 @@ const Discord = require("discord.js");
 
 module.exports = {
   name: "about",
-  description: "About bot information statistics",
+  description: "Estadísticas e información del bot",
   aliases: [],
   category: "information",
   args: false,
   usage: "",
   run: async (client, message, args) => {
-    let owner = client.users.cache.get("700582841741738024")
+    let owner = client.users.cache.get(client.owner)
     let seconds = (client.uptime / 1000);
     let d = Math.floor(seconds / 86400);
     let h = Math.floor(seconds / 3600);
@@ -22,33 +22,32 @@ module.exports = {
     let offline = client.users.cache.filter(x => x.presence.status == "offline").size.toLocaleString();
     
     const embed = new Discord.MessageEmbed()
-      .setColor("#f4f4f4")
-      .setDescription(`> **[Developer]**
+      .setColor(client.color)
+      .setDescription(`> **[Desarrollador]**
         > ${owner.tag} (**${owner.id}**)
         > 
         > **[Ping]**
         > 🏓 ${client.ws.ping} ms
         > 
-        > **[Uptime]**
+        > **[Tiempo de actividad]**
         > ${d}d ${h}h ${m}m ${s}s
         > 
-        > **[Library]**
+        > **[Libreria]**
         > Discord.js v${Discord.version}
         > 
-        > **[Commands]**
+        > **[Comandos]**
         > ${client.commands.size}
         > 
-        > **[Servers]**
+        > **[Servidores]**
         > ${client.guilds.cache.size}
         > 
-        > **[Users]**
+        > **[Usuarios]**
         > Humans: ${client.users.cache.filter(x => !x.bot).size}
         > Robots: ${client.users.cache.filter(x => x.bot).size.toLocaleString()}
         > <:online:731414132963934249> ${online} <:idle:731414172897771603> ${idle} <:dnd:731414184881029121> ${dnd} <:streaming:731414204271165471> ${streaming} <:offline:731414156867010721> ${offline}`)
       .setTimestamp()
       .setFooter(client.version, client.user.displayAvatarURL());
     let msg = await message.channel.send(embed);
-    await msg.delete({ timeout: 20000 });
     await message.delete().catch(console.error);
   }
 };

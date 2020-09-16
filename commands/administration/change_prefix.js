@@ -4,7 +4,7 @@ const settings = new DB("database/settings.db");
 
 module.exports = {
   name: "setprefix",
-  description: "Set the bot prefix on this server",
+  description: "Establecer el prefix del bot en el servidor",
   aliases: [],
   category: "administration",
   args: true,
@@ -13,8 +13,8 @@ module.exports = {
     let file = settings.prepare("SELECT * FROM settings WHERE guildid = ?").get(message.guild.id);
     if (args[1]) {
       const embed = new MessageEmbed()
-        .setColor("#f4f4f4")
-        .setDescription("The prefix cannot contain spaces")
+        .setColor(client.color)
+        .setDescription("> El prefix no puede contener espacios")
         .setTimestamp()
         .setFooter(client.version, client.user.displayAvatarURL());
       let msg = await message.channel.send(embed);
@@ -22,8 +22,8 @@ module.exports = {
       message.delete().catch(console.error);
     } else if (message.mentions.users.first() || message.mentions.channels.first() || message.mentions.roles.first()) {
       const embed = new MessageEmbed()
-        .setColor("#f4f4f4")
-        .setDescription("The prefix cannot be a mention")
+        .setColor(client.color)
+        .setDescription("> El prefix no puede ser una mención")
         .setTimestamp()
         .setFooter(client.version, client.user.displayAvatarURL());
       let msg = await message.channel.send(embed);
@@ -31,8 +31,8 @@ module.exports = {
       message.delete().catch(console.error);
     } else if (args[0].length > 3) {
       const embed = new MessageEmbed()
-        .setColor("#f4f4f4")
-        .setDescription("The prefix cannot contain more than 3 characters")
+        .setColor(client.color)
+        .setDescription("> El prefix no puede contener más de 3 caracteres")
         .setTimestamp()
         .setFooter(client.version, client.user.displayAvatarURL());
       let msg = await message.channel.send(embed);
@@ -40,8 +40,8 @@ module.exports = {
       message.delete().catch(console.error);
     } else if (file.prefix === args[0]) {
       const embed = new MessageEmbed()
-        .setColor("#f4f4f4")
-        .setDescription("The prefix cannot be the same as the current one")
+        .setColor(client.color)
+        .setDescription("> El prefix no puede ser el mismo que el actual")
         .setTimestamp()
         .setFooter(client.version, client.user.displayAvatarURL());
       let msg = await message.channel.send(embed);
@@ -50,8 +50,8 @@ module.exports = {
     } else {
       settings.prepare("UPDATE settings SET prefix = ? WHERE guildid = ?").run(args[0], message.guild.id);
       const embed = new MessageEmbed()
-        .setColor("#f4f4f4")
-        .setDescription(`The prefix has been replaced by \`${args[0]}\``)
+        .setColor(client.color)
+        .setDescription(`> El prefix ha sido reemplazado por \`${args[0]}\``)
         .setTimestamp()
         .setFooter(client.version, client.user.displayAvatarURL());
       let msg = await message.channel.send(embed);
